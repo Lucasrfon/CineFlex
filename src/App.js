@@ -4,6 +4,7 @@ import "./css/reset.css";
 import "./css/style.css";
 import Movies from './pages/Movies';
 import Footer from './components/Footer';
+import Schedule from './pages/Schedule';
 
 export default function App () {
     const [footer, setFooter] = useState(false);
@@ -26,7 +27,7 @@ export default function App () {
             <header onClick={() => setFooter(!footer)}>CINEFLEX</header>
             <Routes>
                 <Route path="/" element={<Movies movies={movies} />} />
-                <Route path="/filme" element={<main>horário</main>} />
+                <Route path="/filme" element={<Schedule />} />
                 <Route path="/sessao" element={<main>assento</main>} />
                 <Route path="/sucesso" element={<main>conferir</main>} />
             </Routes>

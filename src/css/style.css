@@ -16,9 +16,19 @@ header {
     height: 70px;
 }
 
-.moviesContainer {
-    margin-top: 100px;
-    margin-bottom: 150px;
+h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+main {
+    margin: 100px 0px 150px 0px;
+}
+
+main span {
+    font-size: 20px;
+    margin-left: 20px;
 }
 
 footer {
@@ -68,4 +78,22 @@ footer .movieCard {
 footer img {
     height: 72px;
     width: 48px;
+}
+
+.hour {
+    display: flex;
+    overflow-x: scroll;
+}
+
+.button {
+    background-color: #E8833A;
+    height: 45px;
+    min-width: 85px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 23px 10px;
+    text-decoration: none;
 }
