@@ -1,11 +1,11 @@
 import MovieCard from "./MovieCard";
 
-export default function Footer ({movies}) {
+export default function Footer ({movie, date}) {
     return (
         <footer>
-            <MovieCard />
-            <h3>Animais Fantásticos</h3>
-            <span>Quinta-feira - 15:00</span>
+            <MovieCard movie={movie.posterURL} name={movie.title} />
+            <h3>{movie.title}</h3>
+            <span>{date}</span>
         </footer>
     )
 }
