@@ -47,7 +47,7 @@ export default function Seats({movieFinal, setMovieFinal, dateFinal, setDateFina
                 <ContainerAssentos>
                     {seats.map((a) => (
                         a.isAvailable ?
-                        <Seat key={a.id} color="#7B8B99" backgroundcolor="#C3CFD9" onClick={() => test(a)}>{a.name}</Seat> :
+                        <Seat key={a.id} color={selection.includes(a.id) ? "#1AAE9E" : "#7B8B99"} backgroundcolor={selection.includes(a.id) ? "#8DD7CF" : "#C3CFD9"} onClick={() => test(a)}>{a.name}</Seat> :
                         <Seat key={a.id} color="#F7C52B" backgroundcolor="#FBE192" onClick={() => alert("Esse assento não está disponível")}>{a.name}</Seat>
                     ))}
                 </ContainerAssentos>
