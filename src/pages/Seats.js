@@ -9,6 +9,7 @@ export default function Seats({movieFinal, setMovieFinal, dateFinal, setDateFina
     const [seats, setSeats] = useState([]);
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
+    const [selection, setSelection] = useState([]);
 
     useEffect(() => {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idHour.idHour}/seats`);
@@ -23,9 +24,21 @@ export default function Seats({movieFinal, setMovieFinal, dateFinal, setDateFina
 
     function sentRequest(event) {
         event.preventDefault();
-        setForm({...form, ids: selected, name: name, cpf: cpf});
-        console.log(form)
+        setForm({...form, ids: selection, name: name, cpf: cpf});
+        axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', form)
     }
+
+    function test (a) {
+        if(selection.includes(a.id)){
+            setSelection(selection.filter((i) => i !== a.id));
+            setSelected(selected.filter((i) => i !== a.name));
+
+        } else {
+            setSelection([...selection, a.id]);
+            setSelected([...selected, a.name]);
+        }
+    }
+    
 
     return (
         <>
@@ -34,21 +47,21 @@ export default function Seats({movieFinal, setMovieFinal, dateFinal, setDateFina
                 <ContainerAssentos>
                     {seats.map((a) => (
                         a.isAvailable ?
-                        <SeatOk key={a.id} onClick={() => setSelected([...selected, a.id])}>{a.name}</SeatOk> :
-                        <SeatNOk key={a.id} onClick={() => alert("Esse assento não está disponível")}>{a.name}</SeatNOk>
+                        <Seat key={a.id} color="#7B8B99" backgroundcolor="#C3CFD9" onClick={() => test(a)}>{a.name}</Seat> :
+                        <Seat key={a.id} color="#F7C52B" backgroundcolor="#FBE192" onClick={() => alert("Esse assento não está disponível")}>{a.name}</Seat>
                     ))}
                 </ContainerAssentos>
                 <Status>
                     <div>
-                        <SeatSelect></SeatSelect>
+                        <Seat color="#1AAE9E" backgroundcolor="#8DD7CF"></Seat>
                         <span>Selecionado</span>
                     </div>
                     <div>
-                        <SeatOk></SeatOk>
+                        <Seat color="#7B8B99" backgroundcolor="#C3CFD9"></Seat>
                         <span>Disponível</span>
                     </div>
                     <div>
-                        <SeatNOk></SeatNOk>
+                        <Seat color="#F7C52B" backgroundcolor="#FBE192"></Seat>
                         <span>Indisponível</span>
                     </div>
                 </Status>
@@ -112,8 +125,8 @@ const ContainerAssentos = styled.div`
     justify-content: center;
 `
 
-const SeatOk = styled.div`
-    background-color: #C3CFD9;
+const Seat = styled.div`
+    background-color: ${props => props.backgroundcolor};
     margin-right: 10px;
     margin-bottom: 20px;
     font-size: 11px;
@@ -123,35 +136,7 @@ const SeatOk = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 1px #7B8B99;
-`
-
-const SeatNOk = styled.div`
-    background-color: #FBE192;
-    margin-right: 10px;
-    margin-bottom: 20px;
-    font-size: 11px;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: solid 1px #F7C52B;
-`
-
-const SeatSelect = styled.div`
-    background-color: #8DD7CF;
-    margin-right: 10px;
-    margin-bottom: 20px;
-    font-size: 11px;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: solid 1px #1AAE9E;
+    border: solid 1px ${props => props.color};
 `
 
 const Status = styled.div`
