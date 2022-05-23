@@ -1,6 +1,6 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import MovieCard from "../components/MovieCard";
 
 export default function Movies () {
@@ -9,7 +9,7 @@ export default function Movies () {
     useEffect(() => {
         const promisse = axios.get("https://mock-api.driven.com.br/api/v5/cineflex/movies")
 
-    promisse.then(a => {setMovies(a.data)})
+    promisse.then((a) => {setMovies(a.data)})
     }, []);
 
 
@@ -17,11 +17,11 @@ export default function Movies () {
         <main>
             <h2>Selecione o filme</h2>
             <div className="moviesContainer">
-                {movies.map((i) => (
-                <Link to={`/sessoes/${i.id}`} key={i.id}>
+                {movies.map((a) => (
+                <Link to={`/sessoes/${a.id}`} key={a.id}>
                     <MovieCard 
-                    movie={i.posterURL} 
-                    name={i.title}
+                    movie={a.posterURL} 
+                    name={a.title}
                     />
                 </Link>))}
             </div>
