@@ -1,36 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 
-export default function Seats() {
+export default function Seats({movieFinal, setMovieFinal, dateFinal, setDateFinal, hourFinal, setHourFinal, selected, setSelected, form, setForm}) {
     const idHour = useParams();
-    const [date, setDate] = useState("");
-    const [hour, setHour] = useState("");
-    const [movie, setMovie] = useState("");
     const [seats, setSeats] = useState([]);
-    const [selected, setSelected] = useState(false);
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
-    const [form, setForm] = useState({});
 
     useEffect(() => {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idHour.idHour}/seats`);
 
         promisse.then((a) => {
-            setDate(a.data.day.weekday); 
-            setHour(a.data.name);
-            setMovie(a.data.movie);
+            setDateFinal(a.data.day.weekday); 
+            setHourFinal(a.data.name);
+            setMovieFinal(a.data.movie);
             setSeats(a.data.seats);
         })
     }, []);
 
     function sentRequest(event) {
         event.preventDefault();
-        setForm({name: name, cpf: cpf})
+        setForm({...form, ids: selected, name: name, cpf: cpf});
         console.log(form)
     }
+
     return (
         <>
             <Container>
@@ -38,8 +34,8 @@ export default function Seats() {
                 <ContainerAssentos>
                     {seats.map((a) => (
                         a.isAvailable ?
-                        <SeatOk cor={selected} key={a.id} onChange={() => setSelected(!selected)}>{a.name}</SeatOk> :
-                        <SeatNOk key={a.id}>{a.name}</SeatNOk>
+                        <SeatOk key={a.id} onClick={() => setSelected([...selected, a.id])}>{a.name}</SeatOk> :
+                        <SeatNOk key={a.id} onClick={() => alert("Esse assento não está disponível")}>{a.name}</SeatNOk>
                     ))}
                 </ContainerAssentos>
                 <Status>
@@ -61,10 +57,12 @@ export default function Seats() {
                     <input placeholder='Digite seu nome...' id="name" value={name} onChange={e => setName(e.target.value)} />
                     <label htmlFor="cpf">CPF do comprador:</label>
                     <input placeholder='Digite seu CPF...' id="cpf" value={cpf} onChange={e => setCpf(e.target.value)} />
+
                     <button type="submit">Reservar assento(s)</button>
+
                 </form>
             </Container>
-            <Footer date={`${date} - ${hour}`} movie={movie}/>
+            <Footer date={`${dateFinal} - ${hourFinal}`} movie={movieFinal}/>
         </>
     )
 }
@@ -115,7 +113,7 @@ const ContainerAssentos = styled.div`
 `
 
 const SeatOk = styled.div`
-    background-color: ${props => props.selected ? "#8DD7CF" : "#C3CFD9"};
+    background-color: #C3CFD9;
     margin-right: 10px;
     margin-bottom: 20px;
     font-size: 11px;
@@ -125,7 +123,7 @@ const SeatOk = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 1px ${props => props.selected ? "#1AAE9E" : "#7B8B99"};
+    border: solid 1px #7B8B99;
 `
 
 const SeatNOk = styled.div`

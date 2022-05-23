@@ -1,19 +1,23 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Success () {
+export default function Success ({movieFinal, dateFinal, hourFinal, selected, form}) {
     return (
         <Container>
             <h1>Pedido feito</h1>
             <h1>com sucesso!</h1>
             <h3>Filme e sessão</h3>
-            <span>enolinha</span>
-            <span>datinha</span>
+            <span>{movieFinal}</span>
+            <span>{dateFinal}</span>
+            <span>{hourFinal}</span>
             <h3>Ingressos</h3>
-            <span>assento tal</span>
+            {selected.map((a) => <span>Assento {a}</span>)}
             <h3>Comprador</h3>
-            <span>fulano</span>
-            <span>123.456.789-10</span>
-            <button>Voltar pra Home</button>
+            <span>{form.name}</span>
+            <span>{form.cpf}</span>
+            <Link to="/">
+                <button>Voltar pra Home</button>
+            </Link>
         </Container>
     )
 }
@@ -50,7 +54,6 @@ button {
     width: 225px;
     border: none;
     border-radius: 3px;
-    align-self: center;
     font-size: 18px;
 }
 `
