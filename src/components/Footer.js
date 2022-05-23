@@ -16,5 +16,10 @@ export default function Footer ({movie, date}) {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    font-size: 26px;
+    font-size: 24px;
+    color: #293845;
+
+h3 {
+    margin-bottom: 10px;
+}
 `;
